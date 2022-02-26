@@ -8,7 +8,6 @@ cask
 coreutils
 docker
 emacs
-ext4fuse
 fish
 gdbm
 gettext
@@ -47,11 +46,17 @@ pkg-config
 rbenv
 readline
 ruby-build
+sqlite
+tccutil
 telnet
 tree-sitter
 unbound
 unibilium
 wget
 font-meslo-lg-nerd-font
+flycut
+google-chrome
+iterm2
 macfuse
 rectangle
+slack
