@@ -1,5 +1,7 @@
 autoconf
 bdw-gc
+berkeley-db
+brotli
 c-ares
 ca-certificates
 cask
@@ -8,12 +10,14 @@ docker
 emacs
 ext4fuse
 fish
+gdbm
 gettext
 git
 gmp
 gnutls
 guile
 hugo
+icu4c
 jansson
 jemalloc
 libev
@@ -34,9 +38,11 @@ ncurses
 neovim
 nettle
 nghttp2
+node
 openssl@1.1
 p11-kit
 pcre2
+perl
 pkg-config
 rbenv
 readline
@@ -45,5 +51,7 @@ telnet
 tree-sitter
 unbound
 unibilium
+wget
+font-meslo-lg-nerd-font
 macfuse
 rectangle

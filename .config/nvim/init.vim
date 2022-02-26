@@ -23,7 +23,7 @@ syntax on                   " syntax highlighting
 let g:ruby_host_prog = '/Users/ben/.rbenv/versions/3.1.0/bin/neovim-ruby-host'
 
 call plug#begin('~/.vim/plugged')
-    Plug 'dracula/vim'
+    Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
     Plug 'ryanoasis/vim-devicons'
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
