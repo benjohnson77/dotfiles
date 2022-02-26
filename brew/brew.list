@@ -6,7 +6,6 @@ cask
 coreutils
 docker
 emacs
-ext4fuse
 fish
 gettext
 git
@@ -41,9 +40,15 @@ pkg-config
 rbenv
 readline
 ruby-build
+sqlite
+tccutil
 telnet
 tree-sitter
 unbound
 unibilium
+flycut
+google-chrome
+iterm2
 macfuse
 rectangle
+slack
