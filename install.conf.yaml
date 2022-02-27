@@ -1,0 +1,14 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.bash_profile: .bash_profile
+    ~/.config/fish: .config/fish
+    ~/.config/nvim: .config/nvim
+    ~/.gitconfig: git/.gitconfig
+    ~/.gitignore: git/.gitignore
+- create:
+    - ~/.config
