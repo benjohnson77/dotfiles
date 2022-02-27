@@ -1,3 +1,2 @@
 .config/nvim/plugged
-.config/fish/functions/tide*
-.config/fish/functions/_tide*
+.config/fish/fish_variables
