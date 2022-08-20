@@ -1,1 +1,1 @@
-cat brew.list | xargs brew install
+cat ~/.dotfiles/brew/brew.list | xargs brew install

@@ -4,11 +4,15 @@
 
 - clean: ['~']
 
+- create:
+    - ~/.config
+
 - link:
     ~/.bash_profile: .bash_profile
     ~/.config/fish: .config/fish
     ~/.config/nvim: .config/nvim
     ~/.gitconfig: git/.gitconfig
     ~/.gitignore: git/.gitignore
-- create:
-    - ~/.config
+    ~/.zshrc: .zshrc
+- shell
+    command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
