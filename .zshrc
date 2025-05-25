@@ -106,7 +106,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+alias ll="ls -alh"
+
+#source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -118,3 +120,8 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/benjohnson/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/Users/benjohnson/Sites/apps/esv:$PATH"

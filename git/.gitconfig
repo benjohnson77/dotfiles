@@ -5,3 +5,5 @@
 # Please adapt and uncomment the following lines:
 #	name = Ben Johnson
 #	email = benjaminrjohnson99@gmail.com
+[secrets]
+	filters = git-secrets
