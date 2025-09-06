@@ -1,68 +1,114 @@
-local settings = require "settings"
+local settings = require("settings")
 
 local icons = {
-  sf_symbols = {
-    plus = "􀅼",
-    loading = "􀖇",
-    apple = "􀣺",
-    gear = "􀍟",
-    cpu = "󰒆",
-    clipboard = "􀉄",
-    music = "􀑪",
-    calendar = "􀐫",
-    message = "􁋬",
-    separators = {
-      left = "􀄪",
-      right = "􀄫",
-    },
-    space_indicator = {
-      on = "󰄯",
-      off = "󰄰",
-    },
+    sf_symbols = {
+        plus = "􀅼",
+        loading = "􀖇",
+        apple = "􀣺", --󱚞
+        gear = "􀍟",
+        cpu = "󰒆",
+        clipboard = "􀉄",
+        messages = "􀌤",
 
-    switch = {
-      on = "􁏮",
-      off = "􁏯",
+        space_indicator = {
+            on = "󰄯",
+            off = "󰄰",
+        },
+
+        switch = {
+            on = "􁏮",
+            off = "􁏯",
+        },
+        volume = {
+            _100 = "􀊩",
+            _66 = "􀊧",
+            _33 = "􀊥",
+            _10 = "􀊡",
+            _0 = "􀊣",
+        },
+        battery = {
+            _100 = "􀛨",
+            _75 = "􀺸",
+            _50 = "􀺶",
+            _25 = "􀛩",
+            _0 = "􀛪",
+            charging = "􀢋"
+        },
+        wifi = {
+            upload = "􀄨",
+            download = "􀄩",
+            connected = "􀙇",
+            disconnected = "􀙈",
+            router = "􁓤",
+            vpn = "󰌾",
+            test = "󰖩",
+        },
+        media = {
+            back = "􀊊",
+            forward = "􀊌",
+            play_pause = "􀊈",
+        },
+        ramicons = {
+            swap = "󰁄",
+            ram = "󰍛",
+        },
     },
-    menu = "􀌇",
-    volume = {
-      _100 = "􀊨",
-      _66 = "􀊦",
-      _33 = "􀊤",
-      _10 = "􀊠",
-      _0 = "􀊢",
+    nerdfont = {
+        plus = "",
+        loading = "󰔟",
+        apple = "󰀵",
+        gear = "󰒓",
+        cpu = "󰒆",
+        clipboard = "󰅌",
+        messages = "󰍡",
+
+        space_indicator = {
+            on = "󰄯",
+            off = "󰄰",
+        },
+
+        switch = {
+            on = "󰔡",
+            off = "󰔢",
+        },
+        volume = {
+            _100 = "󰕾",
+            _66 = "󰖀",
+            _33 = "󰕿",
+            _10 = "󰕿",
+            _0 = "󰖁",
+        },
+        battery = {
+            _100 = "󰁹",
+            _75 = "󰂀",
+            _50 = "󰁾",
+            _25 = "󰁻",
+            _0 = "󰂎",
+            charging = "󰂄",
+        },
+        wifi = {
+            upload = "󰕒",
+            download = "󰇚",
+            connected = "󰖩",
+            disconnected = "󰖪",
+            router = "󰑩",
+            vpn = "󰌾",
+            test = "󰖩",
+        },
+        media = {
+            back = "󰒮",
+            forward = "󰒭",
+            play_pause = "󰐊",
+        },
+        ramicons = {
+            swap = "󰁄",
+            ram = "󰍛",
+        },
     },
-    battery = {
-      _100 = "􀛨",
-      _75 = "􀺸",
-      _50 = "􀺶",
-      _25 = "􀛩",
-      _0 = "􀛪",
-      charging = "􀢋",
-    },
-    wifi = {
-      upload = "􀄨",
-      download = "􀄩",
-      connected = "􀙇",
-      disconnected = "􀙈",
-      router = "􁓤",
-      vpn = "󰌾",
-      test = "",
-    },
-    media = {
-      back = "􀊊",
-      forward = "􀊌",
-      play_pause = "􀊈",
-    },
-    ramicons = {
-      swap = "󰁄",
-      ram = "󰍛",
-    },
-  },
 }
 
-if not (settings.icons == "NerdFont") then
-  return icons.sf_symbols
+if settings.icons == "nerdfont" or settings.icons == "NerdFont" then
+    return icons.nerdfont
 else
-  return icons.nerdfont
+    return icons.sf_symbols
 end
