@@ -1,5 +1,6 @@
 local icons = require "icons"
 local colors = require("colors").sections.media
+local settings = require "settings"
 
 local spotify = sbar.add("item", {
   position = "right",
@@ -25,7 +26,13 @@ sbar.add("item", {
   position = "popup." .. spotify.name,
   padding_left = 6,
   padding_right = 6,
-  icon = { string = icons.media.back },
+  icon = {
+    string = icons.media.back,
+    font = {
+      family = (settings.icons == "NerdFont" or settings.icons == "nerdfont") and settings.font.icons or settings.font.text,
+      size = 16.0,
+    },
+  },
   label = { drawing = false },
   background = { drawing = false },
   click_script = [[osascript -e 'tell application "Spotify" to play previous track']],
@@ -34,7 +41,13 @@ sbar.add("item", {
   position = "popup." .. spotify.name,
   padding_left = 6,
   padding_right = 6,
-  icon = { string = icons.media.play_pause },
+  icon = {
+    string = icons.media.play_pause,
+    font = {
+      family = (settings.icons == "NerdFont" or settings.icons == "nerdfont") and settings.font.icons or settings.font.text,
+      size = 16.0,
+    },
+  },
   label = { drawing = false },
   background = { drawing = false },
   click_script = [[osascript -e 'tell application "Spotify" to playpause']],
@@ -43,7 +56,13 @@ sbar.add("item", {
   position = "popup." .. spotify.name,
   padding_left = 6,
   padding_right = 6,
-  icon = { string = icons.media.forward },
+  icon = {
+    string = icons.media.forward,
+    font = {
+      family = (settings.icons == "NerdFont" or settings.icons == "nerdfont") and settings.font.icons or settings.font.text,
+      size = 16.0,
+    },
+  },
   label = { drawing = false },
   background = { drawing = false },
   click_script = [[osascript -e 'tell application "Spotify" to play next track']],

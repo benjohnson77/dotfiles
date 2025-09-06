@@ -1,19 +1,18 @@
-local colors = require("colors").sections
-local icons = require "icons"
+local colors = require("colors")
+local icons = require("icons")
 
-sbar.add("item", {
-  padding_left = 8,
-  icon = {
-    font = { size = 24 },
-    string = icons.apple,
-    padding_right = 6,
-    padding_left = 6,
-    color = colors.apple.icon,
-  },
-  background = {
-    color = colors.apple.bg,
-    corner_radius = 9999,
-  },
-  label = { drawing = false },
-  click_script = "$CONFIG_DIR/helpers/menus/bin/menus -s 0",
+
+local apple = sbar.add("item", {
+	icon = {
+		font = { size = 20.0 },
+		string = icons.apple,
+		padding_right = 10,
+		padding_left = 10,
+		color = colors.purple,
+		y_offset = 1,
+	},
+	label = { drawing = false },
+	padding_left = 1,
+	padding_right = 1,
+	click_script = "$CONFIG_DIR/helpers/menus/bin/menus -s 0"
 })

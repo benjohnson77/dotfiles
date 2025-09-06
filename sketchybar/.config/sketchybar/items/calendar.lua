@@ -1,55 +1,44 @@
-local settings = require "settings"
+local settings = require("settings")
+local colors = require("colors")
 
-local minute = sbar.add("item", {
-  label = {
-    font = {
-      family = settings.font.numbers,
-      style = settings.font.style_map["Bold"],
-      size = 20.0,
-    },
-    padding_left = 0,
-    padding_right = 0,
-  },
-  icon = {
-    display = false,
-    padding_left = 0,
-    padding_right = 0,
-  },
-  position = "right",
-  update_freq = 30,
-  click_script = "open -a 'Calendar'",
-  padding_left = 0,
-  padding_right = 8,
+local cal = sbar.add("item", {
+	icon = {
+		color = colors.dirty_white,
+		font = {
+			style = settings.font.style_map["Bold"],
+			size = 12.0,
+		},
+		y_offset = -1,
+		padding_right = -2,
+	},
+	label = {
+		color = colors.dirty_white,
+		width = 96,
+		align = "left",
+		font = {
+			style = settings.font.style_map["Black"],
+			size = 14.0,
+		},
+	},
+	position = "right",
+	update_freq = 1,
+	y_offset = 1,
+	padding_left = -2,
 })
 
-local hour = sbar.add("item", {
-  label = {
-    font = {
-      family = settings.font.numbers,
-      style = settings.font.style_map["Bold"],
-      size = 20.0,
-    },
-    padding_left = 0,
-    padding_right = 0,
-  },
-  icon = {
-    display = false,
-    padding_left = 0,
-    padding_right = 0,
-  },
-  y_offset = -4,
-  padding_left = 0,
-  padding_right = 0,
-  position = "right",
-  update_freq = 30,
-  click_script = "open -a 'Calendar'",
-})
+-- Clean 12-hour time format
+cal:subscribe({ "forced", "routine", "system_woke" }, function(env)
+	cal:set({
+		icon = os.date("%a %b %d"),  -- "Mon Sep 06"
+		label = "｜" .. os.date("%I:%M %p"):gsub("^0", ""):lower()  -- "6:45 pm" (remove leading zero from hour)
+	})
+end)
+
+cal:subscribe("mouse.clicked", function(env)
+	sbar.exec("open -a 'Dato'")
+end)
 
 -- english date
-minute:subscribe({ "forced", "routine", "system_woke" }, function(_)
-  minute:set { label = os.date "%M" }
-end)
-
-hour:subscribe({ "forced", "routine", "system_woke" }, function(_)
-  hour:set { label = os.date "%H" }
-end)
+-- cal:subscribe({ "forced", "routine", "system_woke" }, function(env)
+--   cal:set({ icon = os.date("%a. %d %b."), label = os.date("%H:%M") })
+-- end)
