@@ -21,36 +21,31 @@ return {
 	cyan = 0xff2aa198,
 	green = 0xff859900,
 	
-	-- For compatibility with existing config
-	pink = 0xffd33682,     -- Using magenta
-	purple = 0xff6c71c4,   -- Using violet
-	other_purple = 0xff586e75, -- Using base01
-	
-	-- Derived/utility colors (improved contrast)
+	-- Derived/utility colors
 	white = 0xfffdf6e3,    -- Using base3 as white
 	black = 0xff002b36,    -- Using base03 as black
-	dirty_white = 0xfffdf6e3, -- Full opacity base3 for better readability
+	dirty_white = 0xddeee8d5, -- Base2 with alpha
 	dark_grey = 0xff073642,  -- Base02
-	grey = 0xff93a1a1,      -- Base1 for better contrast
-	lightblack = 0xff839496, -- Base0 for better visibility
+	grey = 0xff586e75,      -- Base01
 	transparent = 0x00000000,
 	
-	-- Bar and component colors (better contrast)
+	-- Bar and component colors
 	bar = {
-		bg = 0xf0002b36,     -- Base03 with more opacity
+		bg = 0xee002b36,     -- Base03 with slight transparency
 		border = 0xff073642, -- Base02
 	},
 	popup = {
-		bg = 0xf0002b36,     -- Base03 with more opacity
-		border = 0xff586e75  -- Base01
+		bg = 0xdd073642,     -- Base02 with transparency
+		border = 0xdd586e75  -- Base01 with transparency
 	},
 	spaces = {
 		active = 0xff2aa198,  -- Cyan for active
-		inactive = 0xff839496, -- Base0 full opacity for better visibility
+		inactive = 0xbb839496, -- Base0 with transparency
 	},
-	bg1 = 0x66073642,       -- Base02 with better transparency
-	bg2 = 0xff073642,       -- Base02 for better contrast
-
+	bg1 = 0x33073642,       -- Base02 with more transparency
+	bg2 = 0xff586e75,       -- Base01
+	
+	-- Function to apply alpha to colors
 	with_alpha = function(color, alpha)
 		if alpha > 1.0 or alpha < 0.0 then return color end
 		return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
