@@ -1,9 +1,12 @@
-# This is Git's per-user configuration file.
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+[pull]
+	rebase = true
+[init]
+	defaultBranch = master
 [user]
 	name = Ben Johnson
 	email = benjaminrjohnson99@gmail.com
-# Please adapt and uncomment the following lines:
-#	name = Ben Johnson
-#	email = benjaminrjohnson99@gmail.com
-[secrets]
-	filters = git-secrets
