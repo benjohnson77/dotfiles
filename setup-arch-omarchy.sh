@@ -73,10 +73,12 @@ install_missing_packages() {
     local packages=(
         # Essential for dotfiles management
         "stow"
-        
+        # needed for thunderbolt hub
+        "bolt"
+
         # Development tools that might not be in omarchy
         "github-cli"
-        "lazygit"
+        "ghostty"
         
         # Shell theme (AUR package)
         "zsh-theme-powerlevel10k-git"
