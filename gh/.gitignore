@@ -1,0 +1,2 @@
+# Exclude authentication tokens and sensitive data
+.config/gh/hosts.yml
