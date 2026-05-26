@@ -108,7 +108,11 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll="ls -alh"
 alias python=python3
-alias esv=/home/bjohnson/workspace/apps/esv/bin/esv
+if [[ "$(uname)" == "Darwin" ]]; then
+  alias esv=/Users/benjohnson/Projects/esv/bin/esv
+else
+  alias esv=/home/bjohnson/workspace/apps/esv/bin/esv
+fi
 
 
 autoload -U +X bashcompinit && bashcompinit
@@ -120,8 +124,11 @@ export PATH="/Users/benjohnson/.rd/bin:$PATH"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/Users/benjohnson/Sites/apps/esv:$PATH"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+if [[ "$(uname)" == "Darwin" ]]; then
+  export PATH="/opt/homebrew/bin:$PATH"
+  export PATH="/Users/benjohnson/Projects/esv/bin:$PATH"
+fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -153,3 +160,10 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # opencode
 export PATH=/Users/benjohnson/.opencode/bin:$PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [[ "$(uname)" == "Darwin" ]]; then
+  export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+fi
