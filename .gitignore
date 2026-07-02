@@ -1,2 +1,61 @@
-.config/nvim/plugged
-.config/fish/fish_variables
+# ─── OS / editor cruft ──────────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+*.swp
+*~
+
+# ─── App state that isn't config ────────────────────────────────────
+**/.config/nvim/plugged
+**/.config/fish/fish_variables
+
+# ─── Secrets: NEVER commit these (repo is public) ───────────────────
+# Auth tokens / gh
+**/.config/gh/hosts.yml
+
+# Env & secret files
+.env
+.env.*
+*.env
+.envrc
+secrets.*
+*secret*
+*.secret
+
+# Private keys, certs, credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*.ppk
+*.gpg
+*.asc
+id_rsa*
+id_ed25519*
+id_ecdsa*
+*.keychain*
+
+# Cloud / tool credential files
+.netrc
+.npmrc
+.pypirc
+.terraformrc
+**/.aws/credentials
+**/.docker/config.json
+**/.kube/config
+*.kubeconfig
+
+# ─── Shell & tool history files ─────────────────────────────────────
+*_history
+.*_history
+.zsh_history
+.bash_history
+.sh_history
+.python_history
+.node_repl_history
+.lesshst
+.rediscli_history
+.psql_history
+.mysql_history
+.irb_history
+**/.config/atuin/*.session
+**/.config/atuin/*.key

@@ -1,1 +1,0 @@
-brew list --cask -1 > ~/.dotfiles/brew/brew.list

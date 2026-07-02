@@ -1,88 +1,110 @@
-tap "felixkratz/formulae"
-tap "koekeishiya/formulae"
-tap "nikitabobko/tap"
-tap "romkatv/powerlevel10k"
+# Brewfile — Homebrew formulae, casks, and taps for this machine.
+#
+# This file is the source of truth for `brew bundle`. It lists only packages
+# installed *on request* (not their dependencies), so it stays readable.
+#
+#   Install everything:    brew bundle --file=~/.dotfiles/brew/Brewfile
+#   Check what's missing:  brew bundle check --file=~/.dotfiles/brew/Brewfile
+#   Regenerate this file:  brew bundle dump --file=~/.dotfiles/brew/Brewfile --force
+#   Remove anything not listed here: brew bundle cleanup --file=~/.dotfiles/brew/Brewfile
 
-# Shell & terminal
-brew "bash"
-brew "fish"
+tap "nikitabobko/tap"   # aerospace window manager
+
+# ─── Shell & terminal ───────────────────────────────────────────────
 brew "fzf"
+brew "powerlevel10k"
 brew "stow"
-brew "zoxide"
-brew "romkatv/powerlevel10k/powerlevel10k"
+brew "tmux"
 
-# Version control
+# ─── Version control ────────────────────────────────────────────────
 brew "git"
-brew "git-secrets"
+brew "gh"
 
-# Editors
-brew "emacs"
-brew "neovim"
-
-# CLI tools
-brew "atuin"
+# ─── CLI tools ──────────────────────────────────────────────────────
 brew "awscli"
-brew "bat"
-brew "bitwarden-cli"
 brew "coreutils"
-brew "direnv"
-brew "eza"
-brew "fd"
-brew "gnupg"
 brew "hugo"
-brew "imagemagick"
-brew "jq"
 brew "pandoc"
 brew "ripgrep"
-brew "sketchybar"
-brew "sqlite"
-brew "telnet"
-brew "terraform"
-brew "tesseract"
-brew "virtualenv"
-brew "wget"
-brew "write-good"
-brew "yarn"
+brew "p7zip"
+brew "testssl"
+brew "pygments"
 
-# Languages & runtimes
-brew "go"
+# ─── Languages & runtimes ───────────────────────────────────────────
 brew "node"
-brew "python@3.11"
-brew "python@3.13"
-brew "rbenv"
-brew "ruby-build"
+brew "php@8.4"
+brew "composer"
+brew "cocoapods"
 
-# Infrastructure
-brew "ansible"
-brew "asdf"
-brew "docker"
-brew "docker-completion"
-brew "docker-machine"
-brew "mysql"
-brew "postgresql@14"
-brew "redis"
+# ─── Databases & servers ────────────────────────────────────────────
+brew "mariadb"
+brew "postgresql@17"
+brew "httpd"
 
-# Media
+# ─── Networking ─────────────────────────────────────────────────────
+brew "openvpn"
+
+# ─── Media ──────────────────────────────────────────────────────────
 brew "ffmpeg"
 
+# ─── Build tools & libraries ────────────────────────────────────────
+brew "automake"
+brew "gobject-introspection"
+brew "libksba"
+brew "pango"
+brew "zlib"
+
+# ─── Applications (casks) ───────────────────────────────────────────
+# Window management
 cask "aerospace"
-cask "bitwarden"
-cask "cursor"
-cask "discord"
-cask "firefox"
-cask "flycut"
-cask "font-hack-nerd-font"
-cask "font-symbols-only-nerd-font"
+
+# Browsers
 cask "google-chrome"
-cask "insomnia"
-cask "iterm2"
-cask "karabiner-elements"
-cask "macfuse"
-cask "miniconda"
-cask "raycast"
-cask "slack"
-cask "spotify"
-cask "tunnelblick"
+cask "zen"           # formerly the "zen-browser" cask, since renamed to "zen"
+
+# AI
+cask "chatgpt"
+cask "claude"
+
+# Dev tools
 cask "visual-studio-code"
 cask "warp"
-cask "wifiman"
+cask "docker-desktop"
+
+# Communication
+cask "slack"
+cask "microsoft-teams"
+cask "zoom"
+cask "superhuman"
+
+# Cloud & sync
+cask "google-drive"
+
+# Security
+cask "bitwarden"
+
+# Input & keyboard
+cask "karabiner-elements"
+
+# Media
+cask "spotify"
+
+# Utilities
+cask "flycut"
+cask "elgato-camera-hub"
+
+# Microsoft support
+cask "microsoft-auto-update"
+cask "microsoft-remote-desktop"
+
+# Runtimes
+cask "temurin@8"
+
+# VPN
+cask "tunnelblick"
+
+# Fonts
+cask "font-fira-code-nerd-font"
+cask "font-hack-nerd-font"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-meslo-lg-nerd-font"
