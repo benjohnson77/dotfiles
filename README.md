@@ -28,7 +28,7 @@ cd ~/.dotfiles
 brew bundle --file=~/.dotfiles/brew/Brewfile
 
 # 5. Symlink the configs you want (see "Stow packages" below)
-stow zsh git nvim gh ghostty iterm karabiner aerospace sketchybar raycast
+stow zsh git nvim gh ghostty iterm karabiner aerospace
 
 # 6. Authenticate GitHub CLI (regenerates the gitignored gh/hosts.yml)
 gh auth login
@@ -90,8 +90,6 @@ ships Hyprland, Waybar, Neovim, etc.). The script:
 | `iterm`      | (manual import — see below)         | iTerm2 prefs & color schemes                  |
 | `karabiner`  | `~/.config/karabiner/`              | Karabiner-Elements key remapping              |
 | `aerospace`  | `~/.config/aerospace/`              | AeroSpace tiling window manager (macOS)       |
-| `sketchybar` | `~/.config/sketchybar/`             | SketchyBar menu bar (macOS)                   |
-| `raycast`    | `~/.config/raycast/`                | Raycast extensions & scripts                  |
 | `hypr`       | `~/.config/hypr/`                   | Hyprland compositor (Linux)                   |
 | `waybar`     | `~/.config/waybar/`                 | Waybar status bar (Linux)                     |
 | `fonts`      | `~/.fonts` / `~/.local/share/fonts` | Powerline / Nerd Font files                   |
