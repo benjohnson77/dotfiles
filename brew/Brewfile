@@ -68,14 +68,12 @@ cask "claude"
 
 # Dev tools
 cask "visual-studio-code"
-cask "warp"
 cask "docker-desktop"
 
 # Communication
 cask "slack"
 cask "microsoft-teams"
 cask "zoom"
-cask "superhuman"
 
 # Cloud & sync
 cask "google-drive"
