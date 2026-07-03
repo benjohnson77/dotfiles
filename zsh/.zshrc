@@ -167,3 +167,6 @@ export NVM_DIR="$HOME/.nvm"
 if [[ "$(uname)" == "Darwin" ]]; then
   export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 fi
+
+# Added by Antigravity IDE
+export PATH="/Users/benjohnson/.antigravity-ide/antigravity-ide/bin:$PATH"
