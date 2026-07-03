@@ -89,6 +89,7 @@ cask "spotify"
 # Utilities
 cask "flycut"
 cask "elgato-camera-hub"
+cask "wispr-flow"    # voice-to-text dictation
 
 # Microsoft support
 cask "microsoft-auto-update"
