@@ -60,7 +60,6 @@ cask "aerospace"
 
 # Browsers
 cask "google-chrome"
-cask "zen"           # formerly the "zen-browser" cask, since renamed to "zen"
 
 # AI
 cask "chatgpt"
