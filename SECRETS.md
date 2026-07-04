@@ -129,6 +129,15 @@ Merge keeps your local file as the base (comments/order preserved), passes
 matching keys through, **appends remote-only keys**, and resolves conflicting
 keys by policy (default: prompt). By default it writes the merged `.env` locally
 **and** pushes it, so both sides converge on the union.
+
+> **Known limitation — no delete propagation (future improvement).** Merge is a
+> two-way union with no common ancestor, so it can't tell "deleted on this box"
+> from "added on the other box" — a key you remove on one machine gets re-added
+> from the other on the next merge. This is deliberately safe (never lose a
+> secret). To make deletes propagate, a future version would track a per-box
+> base snapshot (last-synced state) and do a 3-way merge against it. Until then,
+> to remove a key everywhere: delete it locally, then `env-sync.sh push <name>`
+> (authoritative overwrite) instead of `merge`.
 `save-hermes-env.sh` / `load-hermes-env.sh` remain as thin wrappers for the
 `hermes-env` entry.
 
