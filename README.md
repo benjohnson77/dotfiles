@@ -43,7 +43,7 @@ If you'd rather run the steps by hand:
 eval "$(/opt/homebrew/bin/brew shellenv)"
 brew bundle --file=~/.dotfiles/brew/Brewfile     # installs stow, bitwarden-cli, ...
 stow zsh git nvim gh ghostty iterm karabiner aerospace bin
-load-hermes-env.sh                                # pull .env from Bitwarden
+env-sync.sh pull                                  # pull all .env files from Bitwarden
 ```
 
 ---
@@ -100,7 +100,7 @@ ships Hyprland, Waybar, Neovim, etc.). The script:
 | `waybar`     | `~/.config/waybar/`                 | Waybar status bar (Linux)                     |
 | `fonts`      | `~/.fonts` / `~/.local/share/fonts` | Powerline / Nerd Font files                   |
 | `wallpapers` | wallpaper images                    | Desktop wallpapers                            |
-| `bin`        | `~/.local/bin/`                     | Helper scripts (e.g. `load-hermes-env.sh`)    |
+| `bin`        | `~/.local/bin/`                     | Helper scripts (`env-sync.sh`, …)             |
 | `claude`     | `~/.claude/skills/`                 | Claude Code skills (only skills — no secrets) |
 | `hermes`     | `~/.hermes/SOUL.md`                 | Hermes agent persona (only SOUL.md)           |
 

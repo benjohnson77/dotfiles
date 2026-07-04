@@ -82,7 +82,7 @@ if [[ "$SKIP_SECRETS" == true ]]; then
 elif ! command -v bw >/dev/null 2>&1; then
   log_warning "bw not installed — skipping secrets (see SECRETS.md)"
 else
-  log_info "Pulling secrets from Bitwarden into ~/.hermes/.env ..."
+  log_info "Pulling .env secrets from Bitwarden (see env-sync.manifest) ..."
   # Loads BW_CLIENTID/BW_CLIENTSECRET/BW_PASSWORD from Keychain if you set them.
   [[ -f "$HOME/.zshrc" ]] && source "$HOME/.zshrc" 2>/dev/null || true
 
@@ -91,13 +91,9 @@ else
     bw login || log_warning "bw login skipped"
   fi
 
-  if [[ -d "$HOME/.hermes" ]]; then
-    "$DOTFILES_DIR/bin/.local/bin/load-hermes-env.sh" \
-      && log_success "secrets installed to ~/.hermes/.env" \
-      || log_warning "secret pull skipped/failed (see SECRETS.md)"
-  else
-    log_warning "~/.hermes not present — install Hermes, then run: load-hermes-env.sh"
-  fi
+  "$DOTFILES_DIR/bin/.local/bin/env-sync.sh" pull \
+    && log_success "all manifest .env files installed" \
+    || log_warning "secret pull skipped/failed (see SECRETS.md)"
 fi
 
 log_success "macOS setup complete."

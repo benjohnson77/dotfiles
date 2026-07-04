@@ -1,0 +1,10 @@
+# env-sync manifest — which .env files sync to/from Bitwarden.
+# Format:  <bitwarden-note-name>   <local-path>
+# Public-safe: names + paths only, never secret values.
+# Use:  env-sync.sh pull   (download all)   |   env-sync.sh push   (upload all)
+
+hermes-env    ~/.hermes/.env
+
+# Add more as you onboard workstations/projects, e.g.:
+# myapp-env     ~/code/myapp/.env
+# workstation   ~/.config/dev/.env

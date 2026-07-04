@@ -79,36 +79,47 @@ Only `~/.hermes/SOUL.md` (the agent persona) — via the `hermes/` stow package.
 
 ---
 
-## Managing `.env` with Bitwarden (personal vault)
+## Managing `.env` files with Bitwarden (personal vault)
 
-The whole `.env` is stored as a **single secure note** in your Bitwarden personal
-vault, using the `bw` CLI. Two helper scripts (on PATH via the `bin/` package)
-push it up and pull it down.
+Each `.env` is stored as a **secure note** in your Bitwarden personal vault. A
+single tool — `env-sync.sh` (on PATH via the `bin/` package) — drives everything
+off a **manifest** of `note-name → path`, so onboarding a new workstation is one
+command.
 
-### One-time setup
+### The manifest — [`env-sync.manifest`](env-sync.manifest)
+```
+# <bitwarden-note-name>   <local-path>
+hermes-env    ~/.hermes/.env
+# myapp-env   ~/code/myapp/.env      ← add a line per project
+```
+Public-safe: names + paths only, no secret values. Add a line whenever you want
+another `.env` synced.
+
+### Commands
 ```bash
-brew install bitwarden-cli     # provides `bw` (already in the Brewfile)
-bw login                       # log in to your personal vault
-save-hermes-env.sh             # uploads your current ~/.hermes/.env as a note
+env-sync.sh pull                 # download EVERY manifest .env  (new-workstation setup)
+env-sync.sh push                 # upload   EVERY manifest .env
+env-sync.sh save <name> [path]   # upload one   (path from manifest if omitted)
+env-sync.sh load <name> [path]   # download one (path from manifest if omitted)
+env-sync.sh list                 # show the manifest
+```
+`save-hermes-env.sh` / `load-hermes-env.sh` remain as thin wrappers for the
+`hermes-env` entry.
+
+### Typical flow
+```bash
+# machine that has the secrets:
+env-sync.sh push          # seed/refresh all notes from local .env files
+
+# a fresh workstation (also done automatically by ./setup-macos.sh):
+env-sync.sh pull          # recreate every .env from Bitwarden
 ```
 
-### On a new machine
-```bash
-bw login
-load-hermes-env.sh             # pulls the note down to a 0600 ~/.hermes/.env
-```
+`env-sync.sh` runs `bw unlock` automatically if the vault is locked (prompts for
+your master password unless it's in the Keychain), then `bw sync`.
 
-Both scripts run `bw unlock` automatically if the vault is locked (prompts for
-your master password), then `bw sync`. The note name defaults to `hermes-env`
-(override with `HERMES_BW_ITEM`).
-
-| Script | Direction |
-|--------|-----------|
-| `save-hermes-env.sh [file]` | `~/.hermes/.env` → Bitwarden note (create or update) |
-| `load-hermes-env.sh [file]` | Bitwarden note → `~/.hermes/.env` (0600) |
-
-The scripts contain **no secrets** — only `bw` commands. The `.env` never enters
-this repo.
+The tool contains **no secrets** — only `bw` commands. The `.env` files never
+enter this repo.
 
 > The `.env` is stored **gzip+base64-encoded** in the note. This keeps the file
 > byte-for-byte identical and fits Bitwarden's 10,000-char note limit (a 17 KB
