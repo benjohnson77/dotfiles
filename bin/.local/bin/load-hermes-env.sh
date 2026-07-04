@@ -46,6 +46,7 @@ bw sync >/dev/null 2>&1 || true
 
 umask 077
 mkdir -p "$(dirname "$ENV_FILE")"
-bw get notes "$ITEM" > "$ENV_FILE"
+# The note holds the .env gzip+base64-encoded (see save-hermes-env.sh); reverse it.
+bw get notes "$ITEM" | openssl base64 -d -A | gunzip > "$ENV_FILE"
 chmod 600 "$ENV_FILE"
 echo "Wrote $(grep -cE '^[A-Za-z_]' "$ENV_FILE" || true) vars to $ENV_FILE (from Bitwarden note '$ITEM')"

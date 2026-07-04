@@ -44,8 +44,10 @@ fi
 
 bw sync >/dev/null 2>&1 || true
 
+# Store the file gzip+base64-encoded: keeps it byte-for-byte identical and fits
+# under Bitwarden's 10,000-char note limit. load-hermes-env.sh reverses it.
 export _BW_ITEM="$ITEM"
-export _BW_NOTES="$(cat "$ENV_FILE")"
+export _BW_NOTES="$(gzip -c "$ENV_FILE" | openssl base64 -A)"
 
 # Find an existing item id with this exact name
 id="$(bw list items --search "$ITEM" \

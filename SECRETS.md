@@ -110,6 +110,10 @@ your master password), then `bw sync`. The note name defaults to `hermes-env`
 The scripts contain **no secrets** — only `bw` commands. The `.env` never enters
 this repo.
 
+> The `.env` is stored **gzip+base64-encoded** in the note. This keeps the file
+> byte-for-byte identical and fits Bitwarden's 10,000-char note limit (a 17 KB
+> `.env` compresses to ~7.4 KB). Encoding/decoding is automatic in the scripts.
+
 ### Unattended login (for `./setup-macos.sh`)
 
 By default `bw login` / `bw unlock` are interactive. To let the bootstrap pull
