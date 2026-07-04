@@ -110,8 +110,25 @@ env-sync.sh list                 # show the manifest
 differs from the remote note, it first copies the local file to
 `~/.cache/env-sync/<name>.local.<ts>.bak`. Likewise `push`/`save` stashes the
 differing remote note to `<name>.remote.<ts>.bak` before replacing it. Run
-`env-sync.sh status` before syncing to see what differs. (This is last-write-wins
-*with backups* — a key-level merge is a possible future step.)
+`env-sync.sh status` before syncing to see what differs.
+
+### Merging (when boxes add different keys)
+
+`pull`/`push` are one-directional (with backups). To **reconcile** two boxes that
+each added their own vars, use `merge` (or `sync` for all entries):
+
+```bash
+env-sync.sh merge <name>                  # interactive: asks on each conflict
+env-sync.sh merge <name> --prefer-local   # keep local value on conflicts
+env-sync.sh merge <name> --prefer-remote  # take remote value on conflicts
+env-sync.sh merge <name> --no-push        # write merged .env locally but don't push
+env-sync.sh sync                          # merge every manifest entry, then push
+```
+
+Merge keeps your local file as the base (comments/order preserved), passes
+matching keys through, **appends remote-only keys**, and resolves conflicting
+keys by policy (default: prompt). By default it writes the merged `.env` locally
+**and** pushes it, so both sides converge on the union.
 `save-hermes-env.sh` / `load-hermes-env.sh` remain as thin wrappers for the
 `hermes-env` entry.
 

@@ -127,14 +127,95 @@ do_diff() {
   rm -f "$tmp"
 }
 
+# Key-level merge: local file is the structural base (keeps comments/order),
+# remote values are overlaid. Matching values pass through; remote-only keys are
+# appended; conflicting keys are resolved by policy (ask | local | remote).
+do_merge() {
+  local name="$1"; shift || true
+  local policy="ask" push=1
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --prefer-local)  policy=local ;;
+      --prefer-remote) policy=remote ;;
+      --ask)           policy=ask ;;
+      --no-push)       push=0 ;;
+    esac; shift
+  done
+  local file; file="$(expand_path "$(lookup_path "$name")")"
+  [ -n "$file" ] || { echo "  ! no path for '$name' (not in manifest)" >&2; return 1; }
+  local rtmp merged; rtmp="$(mktemp)"; merged="$(mktemp)"
+  remote_decode "$name" > "$rtmp"
+  if [ ! -s "$rtmp" ]; then
+    echo "  ! no remote note '$name' — nothing to merge (use: env-sync.sh save $name)" >&2
+    rm -f "$rtmp" "$merged"; return 1
+  fi
+  [ -f "$file" ] || : > "$file"
+
+  if EN_POLICY="$policy" python3 - "$file" "$rtmp" "$policy" > "$merged" <<'PY'
+import sys, re
+local_path, remote_path, policy = sys.argv[1], sys.argv[2], sys.argv[3]
+kv = re.compile(r'^([A-Za-z_][A-Za-z0-9_]*)=(.*)$')
+def parse(p):
+    d = {}
+    with open(p) as f:
+        for line in f:
+            mo = kv.match(line.rstrip('\n'))
+            if mo: d[mo.group(1)] = mo.group(2)
+    return d
+remote = parse(remote_path)
+_tty = None
+def ask(k, lv, rv):
+    global _tty
+    if _tty is None:
+        try: _tty = open('/dev/tty')
+        except Exception: return 'local'
+    sys.stderr.write(f"CONFLICT {k}:\n  (l)ocal : {lv}\n  (r)emote: {rv}\nkeep local / take remote? [l/r] ")
+    sys.stderr.flush()
+    return 'remote' if _tty.readline().strip().lower().startswith('r') else 'local'
+out, seen, nconf = [], set(), 0
+with open(local_path) as f:
+    for line in f:
+        raw = line.rstrip('\n')
+        mo = kv.match(raw)
+        if not mo:
+            out.append(raw); continue
+        k, lv = mo.group(1), mo.group(2); seen.add(k)
+        if k in remote and remote[k] != lv:
+            nconf += 1
+            choice = policy if policy in ('local', 'remote') else ask(k, lv, remote[k])
+            out.append(raw if choice == 'local' else f"{k}={remote[k]}")
+            sys.stderr.write(f"  * {k}: {'kept local' if choice=='local' else 'took remote'}\n")
+        else:
+            out.append(raw)
+extras = [k for k in remote if k not in seen]
+if extras:
+    out.append(""); out.append("# --- added from remote (env-sync merge) ---")
+    for k in extras: out.append(f"{k}={remote[k]}")
+    sys.stderr.write(f"  + added {len(extras)} remote-only key(s): {', '.join(extras)}\n")
+sys.stdout.write("\n".join(out) + "\n")
+sys.stderr.write(f"  merged: {nconf} conflict(s), {len(extras)} addition(s)\n")
+PY
+  then
+    if ! cmp -s "$file" "$merged"; then backup "$file" "${name}.local" >/dev/null; fi
+    umask 077; mkdir -p "$(dirname "$file")"; cp "$merged" "$file"; chmod 600 "$file"
+    echo "  = merged -> $file"
+    [ "$push" -eq 1 ] && do_save "$name" "$file"
+  else
+    echo "  ! merge failed for '$name'" >&2
+  fi
+  rm -f "$rtmp" "$merged"
+}
+
 cmd="${1:-}"; shift || true
 case "$cmd" in
   list)   read_manifest ;;
   save)   bw_auth; do_save "$@" ;;
   load)   bw_auth; do_load "$@" ;;
   diff)   bw_auth; do_diff "$@" ;;
+  merge)  bw_auth; do_merge "$@" ;;
   push)   bw_auth; while read -r name path _; do do_save "$name" "$path" || true; done < <(read_manifest) ;;
   pull)   bw_auth; while read -r name path _; do do_load "$name" "$path" || true; done < <(read_manifest) ;;
   status) bw_auth; while read -r name path _; do do_diff "$name" "$path" || true; done < <(read_manifest) ;;
-  *) echo "usage: env-sync.sh {pull|push|status|diff <name>|load <name> [path]|save <name> [path]|list}" >&2; exit 1 ;;
+  sync)   bw_auth; while read -r name path _; do do_merge "$name" "$@" || true; done < <(read_manifest) ;;
+  *) echo "usage: env-sync.sh {pull|push|sync|status|diff <name>|merge <name> [--prefer-local|--prefer-remote|--ask|--no-push]|load <name> [path]|save <name> [path]|list}" >&2; exit 1 ;;
 esac
