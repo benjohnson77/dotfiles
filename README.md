@@ -1,6 +1,7 @@
 # Dotfiles
 
-Personal configuration for macOS (primary) and Arch/Omarchy Linux. Managed with
+Personal configuration for macOS (primary), Arch/Omarchy Linux, and
+Debian/Ubuntu (including headless servers). Managed with
 [GNU Stow](https://www.gnu.org/software/stow/): each top-level directory is a
 "package" whose contents are symlinked into `$HOME`, mirroring the layout the
 files should have relative to your home directory.
@@ -79,6 +80,43 @@ ships Hyprland, Waybar, Neovim, etc.). The script:
 >
 > (`-Qqe` lists only packages you chose, not their dependencies — much cleaner
 > than the current full dump.)
+
+---
+
+## Quick start (Debian / Ubuntu — incl. headless servers)
+
+An automated bootstrap using `apt` + GNU Stow. Works on desktops and headless
+GPU boxes alike (it installs no desktop/GUI packages):
+
+```bash
+git clone <this-repo-url> ~/.dotfiles
+cd ~/.dotfiles
+./setup-debian.sh
+```
+
+The script is idempotent (safe to re-run) and:
+
+1. Verifies it's a Debian/Ubuntu system, then `apt-get update`.
+2. Installs base packages via apt: `stow`, `zsh`, `git`, `neovim`, `curl`,
+   `wget`, `fzf`, `gh`, `fontconfig`.
+3. Installs `oh-my-zsh` (unattended, keeps the stowed `.zshrc`) and
+   `powerlevel10k` (git clone) — neither is packaged on apt.
+4. Installs a **modern static `fzf`** into `~/.local/bin`, because apt ships
+   fzf 0.44 which lacks `fzf --zsh`. (The `zsh/.fzf.zsh` config falls back to
+   apt's `/usr/share/doc/fzf/examples/*.zsh` integration if only old fzf is
+   present, so the prompt works either way.)
+5. Stows the CLI packages: `zsh git gh nvim fonts bash`. Any pre-existing real
+   file at a target is backed up to `<file>.bak-<timestamp>` before stowing.
+6. Sets zsh as the default login shell via `sudo usermod -s` (avoids `chsh`'s
+   interactive PAM prompt).
+
+> **Notes for Debian/Ubuntu:**
+> - Ensure `~/.local/bin` is on your `PATH` (the stowed `.zshrc` handles this)
+>   so the modern fzf takes precedence over apt's.
+> - `gh` may be unavailable on older Debian; add GitHub's apt repo if the
+>   install warns.
+> - apt's Neovim can be older than LazyVim's minimum (≥0.10). If plugin sync
+>   warns, install a newer Neovim (AppImage or the unstable PPA).
 
 ---
 
