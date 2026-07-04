@@ -12,33 +12,39 @@ For example, `stow zsh` creates `~/.zshrc → ~/.dotfiles/zsh/.zshrc`, and
 
 ## Quick start (new macOS machine)
 
+Clone the repo, then run the bootstrap — it installs Homebrew + everything in the
+Brewfile, stows the configs, and pulls your `.env` secrets down from Bitwarden:
+
 ```bash
-# 1. Install Homebrew (grab the current one-liner from https://brew.sh)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# 2. Put brew on PATH (Apple Silicon) and reload the shell
-echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# 3. Clone this repo to ~/.dotfiles
 git clone <this-repo-url> ~/.dotfiles
 cd ~/.dotfiles
-
-# 4. Install all apps & tools
-brew bundle --file=~/.dotfiles/brew/Brewfile
-
-# 5. Symlink the configs you want (see "Stow packages" below)
-stow zsh git nvim gh ghostty iterm karabiner aerospace
-
-# 6. Authenticate GitHub CLI (regenerates the gitignored gh/hosts.yml)
-gh auth login
-
-# 7. Apply macOS system tweaks (review the file first)
-bash apple/setup.sh
+./setup-macos.sh                 # or: ./setup-macos.sh --skip-secrets
 ```
 
-> **Note:** `stow` itself is installed by step 4 (it's in the Brewfile), so run
-> the brew bundle before stowing.
+What `setup-macos.sh` does, in order:
+1. Installs Homebrew (if missing).
+2. `brew bundle` — installs `stow`, `bitwarden-cli`, apps, and all tools.
+3. Stows the config packages into `$HOME` (skips `claude`/`hermes` until those
+   apps are installed, so it never clobbers their dirs).
+4. Pulls secrets from Bitwarden into `~/.hermes/.env` (see
+   [SECRETS.md](SECRETS.md); uses your Keychain API key if set, else prompts).
+
+Then, optionally:
+```bash
+gh auth login          # GitHub CLI auth (regenerates the gitignored gh/hosts.yml)
+bash apple/setup.sh    # macOS defaults (review first)
+```
+
+### Manual equivalent
+
+If you'd rather run the steps by hand:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+brew bundle --file=~/.dotfiles/brew/Brewfile     # installs stow, bitwarden-cli, ...
+stow zsh git nvim gh ghostty iterm karabiner aerospace bin
+load-hermes-env.sh                                # pull .env from Bitwarden
+```
 
 ---
 

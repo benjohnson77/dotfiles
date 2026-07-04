@@ -21,10 +21,24 @@ ITEM="${HERMES_BW_ITEM:-hermes-env}"
 ENV_FILE="${1:-$HOME/.hermes/.env}"
 
 command -v bw >/dev/null 2>&1 || { echo "bw not found — brew install bitwarden-cli" >&2; exit 1; }
-bw login --check >/dev/null 2>&1 || { echo "Not logged in. Run: bw login" >&2; exit 1; }
 
+# Log in: use personal API key if provided (non-interactive), else require prior `bw login`
+if ! bw login --check >/dev/null 2>&1; then
+  if [ -n "${BW_CLIENTID:-}" ] && [ -n "${BW_CLIENTSECRET:-}" ]; then
+    bw login --apikey >/dev/null || { echo "API-key login failed." >&2; exit 1; }
+  else
+    echo "Not logged in. Run: bw login  (or set BW_CLIENTID/BW_CLIENTSECRET)" >&2
+    exit 1
+  fi
+fi
+
+# Unlock: use master password from env if provided, else prompt
 if [ -z "${BW_SESSION:-}" ]; then
-  BW_SESSION="$(bw unlock --raw)" || { echo "Unlock failed." >&2; exit 1; }
+  if [ -n "${BW_PASSWORD:-}" ]; then
+    BW_SESSION="$(bw unlock --passwordenv BW_PASSWORD --raw)" || { echo "Unlock failed." >&2; exit 1; }
+  else
+    BW_SESSION="$(bw unlock --raw)" || { echo "Unlock failed." >&2; exit 1; }
+  fi
   export BW_SESSION
 fi
 

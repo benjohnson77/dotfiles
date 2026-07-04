@@ -110,6 +110,23 @@ your master password), then `bw sync`. The note name defaults to `hermes-env`
 The scripts contain **no secrets** — only `bw` commands. The `.env` never enters
 this repo.
 
+### Unattended login (for `./setup-macos.sh`)
+
+By default `bw login` / `bw unlock` are interactive. To let the bootstrap pull
+secrets without prompts, store a **personal API key** (Vault → Settings →
+Security → Keys → "API Key") and — optionally — your master password in the
+Keychain. `~/.zshrc` exports them; the scripts pick them up automatically:
+
+```bash
+security add-generic-password -s bw-clientid     -a "$USER" -w '<client_id>'
+security add-generic-password -s bw-clientsecret -a "$USER" -w '<client_secret>'
+# optional — enables fully unattended unlock (trade-off: master password at rest)
+security add-generic-password -s bw-password     -a "$USER" -w '<master-password>'
+```
+
+Without `bw-password`, login is automatic but unlock still prompts once — a good
+balance. `./setup-macos.sh` runs `load-hermes-env.sh` as its final step.
+
 ### Alternative: Bitwarden Secrets Manager (`bws`) for Hermes-native
 
 Hermes can also pull individual keys from **Bitwarden Secrets Manager** at runtime
