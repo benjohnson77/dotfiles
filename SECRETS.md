@@ -99,10 +99,19 @@ another `.env` synced.
 ```bash
 env-sync.sh pull                 # download EVERY manifest .env  (new-workstation setup)
 env-sync.sh push                 # upload   EVERY manifest .env
+env-sync.sh status               # show in-sync / differs for every entry
+env-sync.sh diff <name>          # local-vs-remote diff for one entry
 env-sync.sh save <name> [path]   # upload one   (path from manifest if omitted)
 env-sync.sh load <name> [path]   # download one (path from manifest if omitted)
 env-sync.sh list                 # show the manifest
 ```
+
+**Never clobbers silently.** If `pull`/`load` would overwrite a local file that
+differs from the remote note, it first copies the local file to
+`~/.cache/env-sync/<name>.local.<ts>.bak`. Likewise `push`/`save` stashes the
+differing remote note to `<name>.remote.<ts>.bak` before replacing it. Run
+`env-sync.sh status` before syncing to see what differs. (This is last-write-wins
+*with backups* — a key-level merge is a possible future step.)
 `save-hermes-env.sh` / `load-hermes-env.sh` remain as thin wrappers for the
 `hermes-env` entry.
 
