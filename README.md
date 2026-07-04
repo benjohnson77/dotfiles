@@ -94,9 +94,19 @@ ships Hyprland, Waybar, Neovim, etc.). The script:
 | `waybar`     | `~/.config/waybar/`                 | Waybar status bar (Linux)                     |
 | `fonts`      | `~/.fonts` / `~/.local/share/fonts` | Powerline / Nerd Font files                   |
 | `wallpapers` | wallpaper images                    | Desktop wallpapers                            |
+| `claude`     | `~/.claude/skills/`                 | Claude Code skills (only skills — no secrets) |
+| `hermes`     | `~/.hermes/SOUL.md`                 | Hermes agent persona (only SOUL.md)           |
 
 Non-Stow helper directories: `brew/` (Homebrew manifest), `apple/` (macOS
 `defaults` tweaks), `pacman/` (Arch package list).
+
+> **`claude` / `hermes` — secrets stay local.** These packages deliberately
+> symlink only the safe files. Everything else under `~/.claude` (credentials,
+> sessions, history, projects) and `~/.hermes` (`config.yaml`, `auth.json`,
+> `.env`, `google_*.json`, `state.db`) is **not** tracked and is blocked by
+> `.gitignore`. On a fresh machine, install Claude Code / Hermes first so
+> `~/.claude` and `~/.hermes` exist as real directories — otherwise `stow` would
+> symlink the whole directory instead of just the intended file.
 
 ### Common Stow commands
 
