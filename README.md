@@ -94,6 +94,7 @@ ships Hyprland, Waybar, Neovim, etc.). The script:
 | `waybar`     | `~/.config/waybar/`                 | Waybar status bar (Linux)                     |
 | `fonts`      | `~/.fonts` / `~/.local/share/fonts` | Powerline / Nerd Font files                   |
 | `wallpapers` | wallpaper images                    | Desktop wallpapers                            |
+| `bin`        | `~/.local/bin/`                     | Helper scripts (e.g. `load-hermes-env.sh`)    |
 | `claude`     | `~/.claude/skills/`                 | Claude Code skills (only skills — no secrets) |
 | `hermes`     | `~/.hermes/SOUL.md`                 | Hermes agent persona (only SOUL.md)           |
 

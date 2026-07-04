@@ -22,6 +22,7 @@ brew "gh"
 
 # ─── CLI tools ──────────────────────────────────────────────────────
 brew "awscli"
+brew "bitwarden-cli"    # `bw` (personal vault). Secrets Manager uses `bws` — see SECRETS.md
 brew "coreutils"
 brew "hugo"
 brew "pandoc"

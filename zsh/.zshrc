@@ -170,3 +170,16 @@ fi
 
 # Added by Antigravity IDE
 export PATH="/Users/benjohnson/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# ─── Bitwarden Secrets Manager (no secrets stored in this file) ──────
+# Loads the bws access token + project id from the macOS Keychain.
+# Provision once per machine (values never touch the repo):
+#   security add-generic-password -s bws-access-token -a "$USER" -w '<token>'
+#   security add-generic-password -s bws-project-id  -a "$USER" -w '<project-id>'
+if [[ "$(uname)" == "Darwin" ]] && command -v security >/dev/null 2>&1; then
+  _bws_tok="$(security find-generic-password -s bws-access-token -w 2>/dev/null)"
+  [[ -n "$_bws_tok" ]] && export BWS_ACCESS_TOKEN="$_bws_tok"
+  _bws_proj="$(security find-generic-password -s bws-project-id -w 2>/dev/null)"
+  [[ -n "$_bws_proj" ]] && export HERMES_BWS_PROJECT_ID="$_bws_proj"
+  unset _bws_tok _bws_proj
+fi
