@@ -79,31 +79,46 @@ Only `~/.hermes/SOUL.md` (the agent persona) — via the `hermes/` stow package.
 
 ---
 
-## Managing secrets with Bitwarden (optional)
+## Managing `.env` with Bitwarden (personal vault)
 
-Instead of hand-maintaining `.env` files, store every secret once in **Bitwarden
-Secrets Manager** and pull them per machine. Hermes supports this natively.
+The whole `.env` is stored as a **single secure note** in your Bitwarden personal
+vault, using the `bw` CLI. Two helper scripts (on PATH via the `bin/` package)
+push it up and pull it down.
 
 ### One-time setup
-1. In Bitwarden Secrets Manager, create a **project** (e.g. `hermes`) and add each
-   secret from the inventory above (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, …).
-2. Create a **machine access token** scoped to that project (read-only).
-3. Install the `bws` CLI — Hermes auto-installs it, or `cargo install bws`, or grab
-   a release from <https://github.com/bitwarden/sdk-sm>. (`bitwarden-cli` in the
-   Brewfile provides `bw` for the *personal vault*, which is a different product.)
+```bash
+brew install bitwarden-cli     # provides `bw` (already in the Brewfile)
+bw login                       # log in to your personal vault
+save-hermes-env.sh             # uploads your current ~/.hermes/.env as a note
+```
 
-### Per machine (the only secret you provision)
-Store the access token + project id in the macOS Keychain — never in a dotfile:
+### On a new machine
+```bash
+bw login
+load-hermes-env.sh             # pulls the note down to a 0600 ~/.hermes/.env
+```
+
+Both scripts run `bw unlock` automatically if the vault is locked (prompts for
+your master password), then `bw sync`. The note name defaults to `hermes-env`
+(override with `HERMES_BW_ITEM`).
+
+| Script | Direction |
+|--------|-----------|
+| `save-hermes-env.sh [file]` | `~/.hermes/.env` → Bitwarden note (create or update) |
+| `load-hermes-env.sh [file]` | Bitwarden note → `~/.hermes/.env` (0600) |
+
+The scripts contain **no secrets** — only `bw` commands. The `.env` never enters
+this repo.
+
+### Alternative: Bitwarden Secrets Manager (`bws`) for Hermes-native
+
+Hermes can also pull individual keys from **Bitwarden Secrets Manager** at runtime
+(`secrets.bitwarden.enabled: true` + `project_id` in `~/.hermes/config.yaml`). That
+path uses the separate `bws` CLI and a machine access token — `~/.zshrc` loads
+`BWS_ACCESS_TOKEN` / `HERMES_BWS_PROJECT_ID` from the macOS Keychain if you set them:
 ```bash
 security add-generic-password -s bws-access-token -a "$USER" -w '<machine-token>'
 security add-generic-password -s bws-project-id  -a "$USER" -w '<project-id>'
 ```
-`~/.zshrc` loads both into `BWS_ACCESS_TOKEN` / `HERMES_BWS_PROJECT_ID` on shell start.
-
-### Usage
-- **Hermes (native):** set `secrets.bitwarden.enabled: true` + `project_id` in
-  `~/.hermes/config.yaml`. Hermes fetches keys at runtime (300s cache) — no `.env`
-  needed for them.
-- **Generate `~/.hermes/.env` on demand:** `load-hermes-env.sh` (on PATH via the
-  `bin/` package) runs `bws secret list … --output env` into a 0600 `.env`.
-- **Inject into any process, nothing on disk:** `bws run --project-id <id> -- <cmd>`.
+Use whichever fits: single-note (`bw`) for a portable file, or per-key (`bws`) for
+Hermes' built-in runtime injection.
