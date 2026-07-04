@@ -118,10 +118,10 @@ Security → Keys → "API Key") and — optionally — your master password in 
 Keychain. `~/.zshrc` exports them; the scripts pick them up automatically:
 
 ```bash
-security add-generic-password -s bw-clientid     -a "$USER" -w '<client_id>'
-security add-generic-password -s bw-clientsecret -a "$USER" -w '<client_secret>'
+security add-generic-password -U -s bw-clientid     -a "$USER" -w '<client_id>'
+security add-generic-password -U -s bw-clientsecret -a "$USER" -w '<client_secret>'
 # optional — enables fully unattended unlock (trade-off: master password at rest)
-security add-generic-password -s bw-password     -a "$USER" -w '<master-password>'
+security add-generic-password -U -s bw-password     -a "$USER" -w '<master-password>'
 ```
 
 Without `bw-password`, login is automatic but unlock still prompts once — a good
@@ -134,8 +134,8 @@ Hermes can also pull individual keys from **Bitwarden Secrets Manager** at runti
 path uses the separate `bws` CLI and a machine access token — `~/.zshrc` loads
 `BWS_ACCESS_TOKEN` / `HERMES_BWS_PROJECT_ID` from the macOS Keychain if you set them:
 ```bash
-security add-generic-password -s bws-access-token -a "$USER" -w '<machine-token>'
-security add-generic-password -s bws-project-id  -a "$USER" -w '<project-id>'
+security add-generic-password -U -s bws-access-token -a "$USER" -w '<machine-token>'
+security add-generic-password -U -s bws-project-id  -a "$USER" -w '<project-id>'
 ```
 Use whichever fits: single-note (`bw`) for a portable file, or per-key (`bws`) for
 Hermes' built-in runtime injection.

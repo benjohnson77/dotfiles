@@ -174,13 +174,13 @@ export PATH="/Users/benjohnson/.antigravity-ide/antigravity-ide/bin:$PATH"
 # ─── Bitwarden credentials from macOS Keychain (no secrets in this file) ─
 # Provision once per machine (values never touch the repo). See SECRETS.md.
 #   Personal API key (for `bw login --apikey`):
-#     security add-generic-password -s bw-clientid     -a "$USER" -w '<client_id>'
-#     security add-generic-password -s bw-clientsecret -a "$USER" -w '<client_secret>'
+#     security add-generic-password -U -s bw-clientid     -a "$USER" -w '<client_id>'
+#     security add-generic-password -U -s bw-clientsecret -a "$USER" -w '<client_secret>'
 #   Optional master password (for fully unattended unlock):
-#     security add-generic-password -s bw-password     -a "$USER" -w '<master-password>'
+#     security add-generic-password -U -s bw-password     -a "$USER" -w '<master-password>'
 #   Secrets Manager (alternative, for `bws`):
-#     security add-generic-password -s bws-access-token -a "$USER" -w '<token>'
-#     security add-generic-password -s bws-project-id   -a "$USER" -w '<project-id>'
+#     security add-generic-password -U -s bws-access-token -a "$USER" -w '<token>'
+#     security add-generic-password -U -s bws-project-id   -a "$USER" -w '<project-id>'
 if [[ "$(uname)" == "Darwin" ]] && command -v security >/dev/null 2>&1; then
   _kc() { security find-generic-password -s "$1" -w 2>/dev/null; }
   _v="$(_kc bw-clientid)";      [[ -n "$_v" ]] && export BW_CLIENTID="$_v"
