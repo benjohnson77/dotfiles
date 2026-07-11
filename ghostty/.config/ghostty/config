@@ -42,4 +42,5 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200
 theme=solarized
+command = /bin/zsh
 shell-integration = zsh

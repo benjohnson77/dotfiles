@@ -29,7 +29,7 @@ DOTFILES_DIR="$HOME/.dotfiles"
 DOTFILES_REPO="https://github.com/benjohnson77/dotfiles.git"
 
 # CLI-only stow packages (skip desktop/GUI: hypr, waybar, aerospace, etc.)
-STOW_PACKAGES=(zsh git gh nvim fonts bash)
+STOW_PACKAGES=(zsh git gh nvim fonts bash ghostty)
 
 check_debian() {
     if [[ ! -f /etc/debian_version ]]; then
