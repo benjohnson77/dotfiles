@@ -1,193 +1,93 @@
-/* List of colors */
-
-/* {
-    --base03:    #002b36;
-    --base02:    #073642;
-    --base01:    #586e75;
-    --base00:    #657b83;
-    --base0:     #839496;
-    --base1:     #93a1a1;
-    --base2:     #eee8d5;
-    --base3:     #fdf6e3;
-    --yellow:    #b58900;
-    --orange:    #cb4b16;
-    --red:       #dc322f;
-    --magenta:   #d33682;
-    --violet:    #6c71c4;
-    --blue:      #268bd2;
-    --cyan:      #2aa198;
-    --green:     #859900;
-} */
+@import "../omarchy/current/theme/waybar.css";
 
 * {
-    border: 1px;
-    border-radius: 5px;
-    font-family: BlexMono Nerd Font;
-    font-size: 16px;
-    min-height: 0;
+  background-color: @background;
+  color: @foreground;
+
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: 'JetBrainsMono Nerd Font';
+  font-size: 12px;
 }
 
-window#waybar {
-    background-color: #002b36;
-    color: #d33682;
-    transition-property: background-color;
-    transition-duration: .5s;
+.modules-left {
+  margin-left: 8px;
 }
 
-window#waybar.hidden {
-    opacity: 0.2;
+.modules-right {
+  margin-right: 8px;
 }
 
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
-
-window#waybar.termite {
-    background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
-}
-
-#workspaces {
-    border-bottom: 1px solid #586e75;
-}
-
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 #workspaces button {
-    padding: 5px;
-    background-color: transparent;
-    color: #657b83;
-    border-bottom: 3px solid transparent;
+  all: initial;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
 }
 
-#workspaces button.focused {
-    padding:5px;
-    background-color: #073642;
-    border-bottom: 1px solid #ff0;
+#workspaces button.empty {
+  opacity: 0.5;
 }
 
-#workspaces button.urgent {
-    padding:5px;
-    background-color: #d33682;
-}
-
-#mode {
-    padding:5px;
-    background-color: #002b36;
-    border-bottom: 1px solid #dc322f;
-}
-
-#bluetooth, #clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #custom-media, #tray, #mode, #idle_inhibitor {
-    padding: 0 10px;
-    margin: 0 2px;
-    color: #657b83;
-}
-/*
-#clock {
-    background-color: #073642;
-}
-*/
-
-#bluetooth{
-    background-color:#073642;
-}
-
-#battery {
-    background-color: #073642;
-}
-
-#battery.charging {
-    color: #eee8d5;
-    background-color: #859900;
-}
-
-@keyframes blink {
-    to {
-        background-color: #d33682;
-        color: #93a1a1;
-    }
-}
-
-#battery.critical:not(.charging) {
-    background-color: #dc322f;
-    color: #93a1a1;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
-label:focus {
-    background-color: #073642;
-}
-
-#cpu {
-    background-color: #073642;
-}
-
-#memory {
-    background-color: #073642;
-}
-
-#backlight {
-    background-color: #073642;
-}
-
-#network {
-    background-color: #073642;
-}
-
-#network.disconnected {
-    background-color: #002b36;
-}
-
-#pulseaudio {
-    background-color: #073642;
-}
-
-#pulseaudio.muted {
-    background-color: #002b36;
-}
-
-#custom-media {
-    background-color: #66cc99;
-    color: #2a5c45;
-    min-width: 100px;
-}
-
-#custom-media.custom-spotify {
-    background-color: #66cc99;
-}
-
-#custom-media.custom-vlc {
-    background-color: #ffa000;
-}
-
-#temperature {
-    background-color: #073642;
-}
-
-#temperature.critical {
-    background-color: #dc322f;
+#cpu,
+#battery,
+#pulseaudio,
+#custom-omarchy,
+#custom-screenrecording-indicator,
+#custom-update {
+  min-width: 12px;
+  margin: 0 7.5px;
 }
 
 #tray {
-    background-color: #002b36;
+  margin-right: 16px;
 }
 
-#idle_inhibitor {
-    background-color: #002b36;
+#bluetooth {
+  margin-right: 17px;
 }
 
-#idle_inhibitor.activated {
-    background-color: #073642;
+#network {
+  margin-right: 13px;
+}
+
+#custom-expand-icon {
+  margin-right: 18px;
+}
+
+tooltip {
+  padding: 2px;
+}
+
+#custom-update {
+  font-size: 10px;
+}
+
+#clock {
+  margin-left: 8.75px;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+#custom-screenrecording-indicator {
+  min-width: 12px;
+  margin-left: 5px;
+  font-size: 10px;
+  padding-bottom: 1px;
+}
+
+#custom-screenrecording-indicator.active {
+  color: #a55555;
+}
+
+#custom-voxtype {
+  min-width: 12px;
+  margin: 0 0 0 7.5px;
+}
+
+#custom-voxtype.recording {
+  color: #a55555;
 }

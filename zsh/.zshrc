@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git aws battery bundler celery docker docker-compose fzf nvm npm pip rvm ssh ssh-agent)
+plugins=(git aws battery bundler celery colorize common-aliases docker docker-compose fzf nvm npm pip rvm ssh ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,11 +115,17 @@ else
 fi
 
 
+# Prepend a directory to PATH only if it exists, so this file stays portable
+# across macOS, Ubuntu, and Arch instead of collecting dead per-machine paths.
+_prepend_path() { [[ -d "$1" ]] && export PATH="$1:$PATH"; }
+
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/bin/terraform terraform
+_terraform="$(command -v terraform)"
+[[ -n "$_terraform" ]] && complete -o nospace -C "$_terraform" terraform
+unset _terraform
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/benjohnson/.rd/bin:$PATH"
+_prepend_path "$HOME/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -138,7 +144,7 @@ if [ $? -eq 0 ]; then
 else
     if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
         . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
+    elif [ -d "/opt/homebrew/Caskroom/miniconda/base/bin" ]; then
         export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
     fi
 fi
@@ -153,13 +159,16 @@ export PATH="$HOME/.local/bin:$PATH"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Added by Antigravity
-export PATH="/Users/benjohnson/.antigravity/antigravity/bin:$PATH"
+_prepend_path "$HOME/.antigravity/antigravity/bin"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
 # opencode
-export PATH=/Users/benjohnson/.opencode/bin:$PATH
+_prepend_path "$HOME/.opencode/bin"
+
+# npm global installs (npm config set prefix ~/.npm-global)
+_prepend_path "$HOME/.npm-global/bin"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -169,7 +178,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 fi
 
 # Added by Antigravity IDE
-export PATH="/Users/benjohnson/.antigravity-ide/antigravity-ide/bin:$PATH"
+_prepend_path "$HOME/.antigravity-ide/antigravity-ide/bin"
 
 # ─── Bitwarden credentials from macOS Keychain (no secrets in this file) ─
 # Provision once per machine (values never touch the repo). See SECRETS.md.

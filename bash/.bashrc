@@ -305,3 +305,5 @@ export PATH="/Users/benjohnson/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+export PATH=~/.npm-global/bin:$PATH
+export PATH=~/.npm-global/bin:$PATH
