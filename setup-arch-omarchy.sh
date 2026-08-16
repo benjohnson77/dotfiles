@@ -4,7 +4,7 @@
 # Arch Linux Post-Omarchy Installation Setup Script (Lean Version)
 # =============================================================================
 # This script only adds what omarchy doesn't already provide.
-# Omarchy already includes: hyprland, waybar, yay, most fonts, basic theming
+# Omarchy already includes: hyprland, its Quickshell bar, yay, most fonts, basic theming
 # Uses GNU Stow for dotfiles management
 #
 # Author: bjohnson
@@ -130,7 +130,6 @@ stow_dotfiles() {
         "git"
         "nvim"
         "fonts"
-        "waybar"
         "fish"
         "ghostty"
         "hypr"

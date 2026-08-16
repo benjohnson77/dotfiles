@@ -65,7 +65,7 @@ ships Hyprland, Waybar, Neovim, etc.). The script:
 1. Runs `pacman -Syu`, then installs a small set of extras Omarchy doesn't
    include: `stow`, `bolt`, `github-cli`, `ghostty`, and the
    `zsh-theme-powerlevel10k-git` AUR package.
-2. Stows the Linux-relevant packages (`zsh`, `git`, `nvim`, `fonts`, `waybar`,
+2. Stows the Linux-relevant packages (`zsh`, `git`, `nvim`, `fonts`,
    `fish`, `ghostty`, `hypr`).
 3. Generates an ed25519 SSH key if one doesn't exist.
 4. Sets up the Omarchy theme and wallpapers.
@@ -135,7 +135,6 @@ The script is idempotent (safe to re-run) and:
 | `karabiner`  | `~/.config/karabiner/`              | Karabiner-Elements key remapping              |
 | `aerospace`  | `~/.config/aerospace/`              | AeroSpace tiling window manager (macOS)       |
 | `hypr`       | `~/.config/hypr/`                   | Hyprland compositor (Linux)                   |
-| `waybar`     | `~/.config/waybar/`                 | Waybar status bar (Linux)                     |
 | `fonts`      | `~/.fonts` / `~/.local/share/fonts` | Powerline / Nerd Font files                   |
 | `wallpapers` | wallpaper images                    | Desktop wallpapers                            |
 | `bin`        | `~/.local/bin/`                     | Helper scripts (`env-sync.sh`, …)             |

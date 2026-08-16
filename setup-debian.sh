@@ -28,7 +28,7 @@ log_error()   { echo -e "${RED}[ERROR]${NC} $1"; }
 DOTFILES_DIR="$HOME/.dotfiles"
 DOTFILES_REPO="https://github.com/benjohnson77/dotfiles.git"
 
-# CLI-only stow packages (skip desktop/GUI: hypr, waybar, aerospace, etc.)
+# CLI-only stow packages (skip desktop/GUI: hypr, aerospace, etc.)
 STOW_PACKAGES=(zsh git gh nvim fonts bash ghostty)
 
 check_debian() {
