@@ -300,9 +300,15 @@ fi
 # ============================================================================
 # MACHINE-SPECIFIC CONFIGURATIONS (keep existing)
 # ============================================================================
+# Prepend a directory to PATH only if it exists, so this file stays portable
+# across macOS, Ubuntu, and Arch instead of collecting dead per-machine paths.
+_prepend_path() { [[ -d "$1" ]] && export PATH="$1:$PATH"; }
+
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/benjohnson/.rd/bin:$PATH"
+_prepend_path "$HOME/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-export PATH=~/.npm-global/bin:$PATH
+[[ -d "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin"
+
+_prepend_path "$HOME/.npm-global/bin"
