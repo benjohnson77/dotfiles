@@ -41,6 +41,19 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200
-theme=solarized
+
+theme = Solarized Dark Patched
 command = /bin/zsh
 shell-integration = zsh
+
+# Slow down mouse scrolling
+mouse-scroll-multiplier = 0.95
+
+# Send Shift+Enter as CSI-u so TUIs can distinguish it from Enter.
+keybind = shift+enter=csi:13;2u
+
+# Legacy encoding sends Alt+Shift+Enter the same as Alt+Enter; send CSI-u so tmux can match M-S-Enter.
+keybind = alt+shift+enter=csi:13;4u
+
+# Linux-only settings (optional include: silently skipped on macOS).
+config-file = ?linux.conf

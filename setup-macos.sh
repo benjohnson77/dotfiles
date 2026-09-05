@@ -58,7 +58,7 @@ log_info "Stowing dotfiles..."
 command -v stow >/dev/null 2>&1 || { log_error "stow not found — run without --skip-brew, or 'brew install stow'"; exit 1; }
 
 # macOS-relevant packages. hermes/claude are guarded below (need their target dir).
-STOW_PACKAGES=(zsh bash git gh nvim ghostty iterm karabiner aerospace bin fonts wallpapers claude hermes)
+STOW_PACKAGES=(zsh bash git gh nvim ghostty iterm karabiner aerospace bin fonts claude hermes)
 
 cd "$DOTFILES_DIR"
 for pkg in "${STOW_PACKAGES[@]}"; do

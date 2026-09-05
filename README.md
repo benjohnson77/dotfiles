@@ -43,7 +43,7 @@ If you'd rather run the steps by hand:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 brew bundle --file=~/.dotfiles/brew/Brewfile     # installs stow, bitwarden-cli, ...
-stow zsh git nvim gh ghostty iterm karabiner aerospace bin
+stow zsh bash git nvim gh ghostty iterm karabiner aerospace bin fonts
 env-sync.sh pull                                  # pull all .env files from Bitwarden
 ```
 
@@ -65,8 +65,9 @@ ships Hyprland, Waybar, Neovim, etc.). The script:
 1. Runs `pacman -Syu`, then installs a small set of extras Omarchy doesn't
    include: `stow`, `bolt`, `github-cli`, `ghostty`, and the
    `zsh-theme-powerlevel10k-git` AUR package.
-2. Stows the Linux-relevant packages (`zsh`, `git`, `nvim`, `fonts`,
-   `fish`, `ghostty`, `hypr`).
+2. Stows the Linux-relevant packages (`zsh`, `bash`, `git`, `gh`, `nvim`,
+   `fonts`, `ghostty`, `hypr`, `bin`, `pacman`, and `claude` — the last only if
+   `~/.claude` already exists).
 3. Generates an ed25519 SSH key if one doesn't exist.
 4. Sets up the Omarchy theme and wallpapers.
 
@@ -105,7 +106,7 @@ The script is idempotent (safe to re-run) and:
    fzf 0.44 which lacks `fzf --zsh`. (The `zsh/.fzf.zsh` config falls back to
    apt's `/usr/share/doc/fzf/examples/*.zsh` integration if only old fzf is
    present, so the prompt works either way.)
-5. Stows the CLI packages: `zsh git gh nvim fonts bash`. Any pre-existing real
+5. Stows the CLI packages: `zsh git gh nvim fonts bash ghostty bin`. Any pre-existing real
    file at a target is backed up to `<file>.bak-<timestamp>` before stowing.
 6. Sets zsh as the default login shell via `sudo usermod -s` (avoids `chsh`'s
    interactive PAM prompt).
@@ -126,23 +127,23 @@ The script is idempotent (safe to re-run) and:
 |--------------|-------------------------------------|-----------------------------------------------|
 | `zsh`        | `~/.zshrc`, `~/.p10k.zsh`           | Zsh + Powerlevel10k prompt config             |
 | `bash`       | `~/.bashrc`, `~/.bash_profile`      | Bash fallback config                          |
-| `fish`       | `~/.config/fish/`                   | Fish shell config                             |
 | `git`        | `~/.gitconfig`, `~/.gitignore`      | Git aliases, user, gh credential helper       |
 | `gh`         | `~/.config/gh/`                     | GitHub CLI config (**tokens are gitignored**) |
 | `nvim`       | `~/.config/nvim/`                   | Neovim (LazyVim) config                        |
-| `ghostty`    | `~/.config/ghostty/`                | Ghostty terminal config                       |
+| `ghostty`    | `~/.config/ghostty/`                | Ghostty terminal config (`linux.conf` is an optional Linux-only include) |
 | `iterm`      | (manual import — see below)         | iTerm2 prefs & color schemes                  |
 | `karabiner`  | `~/.config/karabiner/`              | Karabiner-Elements key remapping              |
 | `aerospace`  | `~/.config/aerospace/`              | AeroSpace tiling window manager (macOS)       |
 | `hypr`       | `~/.config/hypr/`                   | Hyprland compositor (Linux)                   |
 | `fonts`      | `~/.fonts` / `~/.local/share/fonts` | Powerline / Nerd Font files                   |
-| `wallpapers` | wallpaper images                    | Desktop wallpapers                            |
 | `bin`        | `~/.local/bin/`                     | Helper scripts (`env-sync.sh`, …)             |
+| `pacman`     | `~/pacFile`                         | Arch package snapshot (reference only)        |
 | `claude`     | `~/.claude/skills/`                 | Claude Code skills (only skills — no secrets) |
 | `hermes`     | `~/.hermes/SOUL.md`                 | Hermes agent persona (only SOUL.md)           |
 
 Non-Stow helper directories: `brew/` (Homebrew manifest), `apple/` (macOS
-`defaults` tweaks), `pacman/` (Arch package list).
+`defaults` tweaks), `wallpapers/` (images the Arch setup copies into the Omarchy
+theme's `backgrounds/` dir — it has no `$HOME` layout, so never `stow` it).
 
 > **`claude` / `hermes` — secrets stay local.** These packages deliberately
 > symlink only the safe files. Everything else under `~/.claude` (credentials,

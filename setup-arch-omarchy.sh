@@ -124,15 +124,20 @@ stow_dotfiles() {
     # Auto-detect stow packages (directories that contain config files)
     local stow_packages=()
     
-    # Common dotfile directories to check
+    # Linux/Arch-relevant packages ("wallpapers" is not one: it has no $HOME
+    # layout — setup_omarchy_theme copies it into the theme's backgrounds dir).
     local potential_packages=(
         "zsh"
+        "bash"
         "git"
+        "gh"
         "nvim"
         "fonts"
-        "fish"
         "ghostty"
         "hypr"
+        "bin"
+        "pacman"
+        "claude"
     )
     
     for package in "${potential_packages[@]}"; do
@@ -147,6 +152,12 @@ stow_dotfiles() {
     fi
     
     for package in "${stow_packages[@]}"; do
+        # Guard: only stow into ~/.claude if it already exists as a real dir —
+        # otherwise stow would symlink the whole directory (clobbering state).
+        if [[ "$package" == "claude" && ! -d "$HOME/.claude" ]]; then
+            log_warning "skip 'claude' (install Claude Code first)"
+            continue
+        fi
         log_info "Stowing $package..."
         # Unstow first in case there are existing files, ignore errors
         stow -D "$package" 2>/dev/null || true
