@@ -15,6 +15,7 @@ brew "fzf"
 brew "powerlevel10k"
 brew "stow"
 brew "tmux"
+brew "neovim"       # config stowed via the nvim package
 
 # ─── Version control ────────────────────────────────────────────────
 brew "git"
@@ -24,6 +25,7 @@ brew "gh"
 brew "awscli"
 brew "bitwarden-cli"    # `bw` (personal vault). Secrets Manager uses `bws` — see SECRETS.md
 brew "coreutils"
+brew "mas"              # Mac App Store CLI (needed for the mas entries below)
 brew "hugo"
 brew "pandoc"
 brew "ripgrep"
@@ -68,6 +70,7 @@ cask "claude"
 
 # Dev tools
 cask "visual-studio-code"
+cask "iterm2"              # config stowed via the iterm package
 cask "docker-desktop"
 
 # Communication
@@ -94,7 +97,7 @@ cask "wispr-flow"    # voice-to-text dictation
 
 # Microsoft support
 cask "microsoft-auto-update"
-cask "microsoft-remote-desktop"
+cask "windows-app"    # was microsoft-remote-desktop (renamed by Microsoft)
 
 # Runtimes
 cask "temurin@8"
@@ -107,3 +110,8 @@ cask "font-fira-code-nerd-font"
 cask "font-hack-nerd-font"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-meslo-lg-nerd-font"
+
+# ─── Mac App Store ──────────────────────────────────────────────────
+# Requires `brew "mas"` above and being signed in to the App Store.
+# `mas` can only install apps already in your purchase history.
+mas "Meeting Reminder In Your Face", id: 1476964367
